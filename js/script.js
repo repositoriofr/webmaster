@@ -139,7 +139,6 @@ function guardarRegistro() {
     });
   }
   
-
 // Función para convertir un valor en formato similar a Excel (escapando caracteres especiales)
 function toExcelLikeText(value) {
   if (typeof value !== 'string') value = String(value);
@@ -155,43 +154,43 @@ function exportarDatos() {
     return;
   }
 
-  // Encabezados copiados de la plantilla original
+  // Encabezados copiados fielmente de la plantilla manual
   const encabezados = [
     'NOMBRE DE CLIENTE / TITULAR (NOMBRES Y APELLIDOS COMPLETOS)',
-    '" CEDULA O RUC\r\n(INGRESAR SOLO N⁄MEROS NO COMILLAS NI ESPACIOS)"',
-    '" CODIGO DACTILAR\r\n(INGRESAR SOLO N⁄MEROS NO COMILLAS NI ESPACIOS)"',
-    '"NOMBRE DE CONTACTO PARA CITA\r\n(NOMBRE DE LA PERSONA QUE VA A RECIBIR EL PEDIDO)"',
-    'TEL…FONO CONTACTO CITA',
+    '" CEDULA O RUC\n(INGRESAR SOLO NÚMEROS NO COMILLAS NI ESPACIOS)"',
+    '" CODIGO DACTILAR\n(INGRESAR SOLO NÚMEROS NO COMILLAS NI ESPACIOS)"',
+    '"NOMBRE DE CONTACTO PARA CITA\n(NOMBRE DE LA PERSONA QUE VA A RECIBIR EL PEDIDO)"',
+    'TELÉFONO CONTACTO CITA',
     'HORA DE ENTREGA',
-    '"PROVINCIA\r\n(SELECCIONE)"',
-    '"CIUDAD DE ENTREGA\r\n(SELECCIONE)"',
-    '"DIRECCI”N DE ENTREGA DEL PEDIDO (CITA)\r\n(CANT”N / SECTOR / BARRIO / CALLE PRINCIPAL / CALLE SECUNDARIA / NOMBRE EDIFICO / NO. CASA / VILLA / SOLAR / LOTE / DEPARTAMENTO / REFERENCIAS: FRENTE DE..JUNTO A..DIAGONALÖA ""X"" CUADRAS DE..)"',
-    'USUARIO DE LA LÕNEA',
-    '"MODELO EQUIPO\r\n(INGRESAR EL MODELO, ESTE CAMPO NO DEBE ESTAR VACÕO)"',
-    '"NUMERO CELULAR (MIN)\r\n(INGRESE SOLO N⁄MEROS)"',
-    '"TERMINAL/IMEI \r\n(INGRESE SOLO LOS 15 DÕGITOS)"',
-    '"SIMCARD/ICC\r\n(INGRESE SOLO LOS 19 DÕGITOS)"',
-    '"# ORDEN DE VENTA\r\n"',
-    '" # FACTURA                            (FORMATO                                        000000-000000000)\r\n"',
-    '"USUARIO QUE FACTURA\r\n(C”DIGO NAE...)"',
+    '"PROVINCIA\n(SELECCIONE)"',
+    '"CIUDAD DE ENTREGA\n(SELECCIONE)"',
+    '"DIRECCIÓN DE ENTREGA DEL PEDIDO (CITA)\n(CANTÓN / SECTOR / BARRIO / CALLE PRINCIPAL / CALLE SECUNDARIA / NOMBRE EDIFICO / NO. CASA / VILLA / SOLAR / LOTE / DEPARTAMENTO / REFERENCIAS: FRENTE DE..JUNTO A..DIAGONAL…A ""X"" CUADRAS DE..)"',
+    'USUARIO DE LA LÍNEA',
+    '"MODELO EQUIPO\n(INGRESAR EL MODELO, ESTE CAMPO NO DEBE ESTAR VACÍO)"',
+    '"NUMERO CELULAR (MIN)\n(INGRESE SOLO NÚMEROS)"',
+    '"TERMINAL/IMEI \n(INGRESE SOLO LOS 15 DÍGITOS)"',
+    '"SIMCARD/ICC\n(INGRESE SOLO LOS 19 DÍGITOS)"',
+    '"# ORDEN DE VENTA\n"',
+    '" # FACTURA                            (FORMATO                                        000000-000000000)\n"',
+    '"USUARIO QUE FACTURA\n(CÓDIGO NAE...)"',
     'COBRO DELIVERY'
   ];
 
-  // Armar el contenido del archivo: encabezados + registros (cada registro en una línea)
-  let contenido = encabezados.join('\t') + '\r\n';
+  // Construir el contenido: Encabezados + cada registro en su propia línea
+  let contenido = encabezados.join('\t') + '\n';
   registros.forEach(registro => {
-    contenido += registro.map(v => toExcelLikeText(v)).join('\t') + '\r\n';
+    contenido += registro.map(v => toExcelLikeText(v)).join('\t') + '\n';
   });
 
-  // Crear archivo con codificación Windows-1252 y BOM para compatibilidad
-  const blob = new Blob(["\uFEFF" + contenido], { 
-    type: 'text/plain;charset=windows-1252' 
+  // Crear archivo con codificación UTF-8 sin BOM (quitamos "\uFEFF")
+  const blob = new Blob([contenido], { 
+    type: 'text/plain;charset=utf-8' 
   });
 
-  // Iniciar la descarga del archivo
+  // Forzar la descarga
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `RegistrosOrdenesVenta.txt`;
+  a.download = 'PlantillaCargaPedidosMasivo.txt';
   a.click();
 }
 
