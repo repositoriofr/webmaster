@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Orden de Venta</title>
+  <link rel="icon" type="image/png" href="images/ico.png">
+  <!-- Enlazamos el archivo CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <h1>Registro de Orden de Venta</h1>
+
+  <!-- Formulario principal -->
+  <form id="ordenForm" class="form-container" novalidate autocomplete="off">
+      
+    <!-- == Campos originales == -->
+    <div class="form-group">
+      <label for="nombreCliente">NOMBRE DE CLIENTE / TITULAR:</label>
+      <input 
+        type="text" 
+        id="nombreCliente" 
+        name="nombreCliente" 
+        placeholder="Ej: Juan Pérez González" 
+        required 
+        maxlength="100"
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+      <div class="error-message">No se permiten emojis</div>
+    </div>      
+
+    <div class="form-group">
+      <label for="cedulaRuc">CEDULA O RUC:</label>
+      <input 
+        type="text" 
+        id="cedulaRuc" 
+        name="cedulaRuc" 
+        placeholder="10 dígitos (cédula) o 13 (RUC)" 
+        required 
+        pattern="\d{10}|\d{13}"
+        maxlength="13">
+      <div class="error-message">Debe contener 10 o 13 dígitos numéricos</div>
+    </div>
+
+    <div class="form-group">
+      <label for="codigoDactilar">CODIGO DACTILAR:</label>
+      <input 
+        type="text" 
+        id="codigoDactilar" 
+        name="codigoDactilar" 
+        placeholder="Datos automáticos desde CEDULA O RUC" 
+        required 
+        pattern="\d{8,15}"
+        maxlength="15"
+        readonly>
+      <div class="error-message">Entre 8 y 13 dígitos numéricos</div>
+    </div>
+
+    <div class="form-group">
+      <label for="nombreContacto">NOMBRE DE CONTACTO PARA CITA:</label>
+      <input 
+        type="text" 
+        id="nombreContacto" 
+        name="nombreContacto" 
+        placeholder="Ej: María López"
+        required 
+        maxlength="100"
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+      <div class="error-message">Solo letras y espacios permitidos</div>
+
+    </div>
+
+    <div class="form-group">
+      <label for="telefonoContacto">TELÉFONO CONTACTO CITA:</label>
+      <input 
+        type="tel" 
+        id="telefonoContacto" 
+        name="telefonoContacto" 
+        placeholder="Ej: 0999123456" 
+        required 
+        pattern="\d{7,10}"
+        maxlength="10">
+      <div class="error-message">7-10 dígitos numéricos</div>
+    </div>
+
+    <div class="form-group">
+      <label for="horaEntrega">HORA DE ENTREGA:</label>
+      <select id="horaEntrega" name="horaEntrega" required>
+        <option value="" disabled selected>Seleccione una opción</option>
+        <option value="mañana">MAÑANA</option>
+        <option value="tarde">TARDE</option>
+        <option value="noche">NOCHE</option>
+      </select>
+      <div class="error-message">Seleccione un horario válido: MAÑANA / TARDE / NOCHE</div>
+    </div>
+      
+    <!-- Desplegable de Provincias -->
+    <div class="form-group">
+      <label for="provincia">PROVINCIA:</label>
+      <select id="provincia" name="provincia" required>
+        <option value="">Seleccione provincia</option>
+        <option value="AZUAY">AZUAY</option>
+        <option value="BOLIVAR">BOLIVAR</option>
+        <option value="CANAR">CANAR</option>
+        <option value="CARCHI">CARCHI</option>
+        <option value="CHIMBORAZO">CHIMBORAZO</option>
+        <option value="COTOPAXI">COTOPAXI</option>
+        <option value="EL ORO">EL ORO</option>
+        <option value="ESMERALDAS">ESMERALDAS</option>
+        <option value="GALAPAGOS">GALAPAGOS</option>
+        <option value="GUAYAS">GUAYAS</option>
+        <option value="IMBABURA">IMBABURA</option>
+        <option value="LOJA">LOJA</option>
+        <option value="LOS RIOS">LOS RIOS</option>
+        <option value="MANABI">MANABI</option>
+        <option value="MORONA SANTIAGO">MORONA SANTIAGO</option>
+        <option value="NAPO">NAPO</option>
+        <option value="ORELLANA">ORELLANA</option>
+        <option value="PASTAZA">PASTAZA</option>
+        <option value="PICHINCHA">PICHINCHA</option>
+        <option value="SANTA ELENA">SANTA ELENA</option>
+        <option value="SANTO DOMINGO DE LOS TSACHILAS">SANTO DOMINGO DE LOS TSACHILAS</option>
+        <option value="SUCUMBIOS">SUCUMBIOS</option>
+        <option value="TUNGURAHUA">TUNGURAHUA</option>
+        <option value="ZAMORA CHINCHIPE">ZAMORA CHINCHIPE</option>
+      </select>
+      <div class="error-message">Seleccione una provincia</div>
+    </div>
+
+    <!-- Desplegable de Ciudades/Cantones -->
+    <div class="form-group">
+      <label for="ciudadEntrega">CIUDAD DE ENTREGA:</label>
+      <select id="ciudadEntrega" name="ciudadEntrega" required>
+        <option value="">Seleccione ciudad</option>
+      </select>
+      <div class="error-message">Seleccione una ciudad</div>
+    </div>
+
+    <div class="form-group">
+      <label for="direccionEntrega">DIRECCIÓN DE ENTREGA:</label>
+      <textarea 
+        id="direccionEntrega" 
+        name="direccionEntrega" 
+        placeholder="Ej: Av. Principal 123 y Calle Secundaria, Edificio Azul, Depto 4B"
+        required 
+        maxlength="500"
+      ></textarea>
+      <div class="error-message">Dirección requerida (máx. 500 caracteres)</div>
+    </div>
+
+    <div class="form-group">
+      <label for="usuarioLinea">USUARIO DE LA LÍNEA:</label>
+      <input 
+        type="text" 
+        id="usuarioLinea" 
+        name="usuarioLinea" 
+        placeholder="Ej: IMPORTACIONES MIRANDA S.A." 
+        required 
+        maxlength="100"
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+      <div class="error-message">No se permiten emojis</div>
+    </div>
+
+    <div class="form-group">
+      <label for="modeloEquipo">MODELO EQUIPO:</label>
+      <input 
+        type="text" 
+        id="modeloEquipo" 
+        name="modeloEquipo" 
+        placeholder="Ej: iPhone 15 Pro Max" 
+        required 
+        maxlength="50">
+      <div class="error-message">Modelo requerido</div>
+    </div>
+
+    <div class="form-group">
+      <label for="numeroCelular">NUMERO CELULAR (MIN):</label>
+      <input 
+        type="tel" 
+        id="numeroCelular" 
+        name="numeroCelular" 
+        placeholder="Ej: 0998765432" 
+        required 
+        pattern="\d{10}"
+        maxlength="10">
+      <div class="error-message">Solo números</div>
+    </div>
+
+    <div class="form-group">
+      <label for="terminalImei">TERMINAL/IMEI:</label>
+      <input 
+        type="text" 
+        id="terminalImei" 
+        name="terminalImei" 
+        placeholder="15 dígitos"
+        pattern="\d{15}"
+        maxlength="15">
+      <div class="error-message">15 dígitos exactos</div>
+    </div>
+
+    <div class="form-group">
+      <label for="simcardIcc">SIMCARD/ICC:</label>
+      <input 
+        type="text" 
+        id="simcardIcc" 
+        name="simcardIcc" 
+        placeholder="19 dígitos" 
+        required 
+        pattern="\d{19}"
+        maxlength="19">
+      <div class="error-message">19 dígitos exactos</div>
+    </div>
+
+    <div class="form-group">
+      <label for="ordenVenta">ORDEN DE VENTA:</label>
+      <input 
+        type="text" 
+        id="ordenVenta" 
+        name="ordenVenta" 
+        placeholder="Ej: ORD-123456" 
+        required 
+        maxlength="20"
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+      <div class="error-message">No se permiten emojis</div>
+    </div>
+
+    <div class="form-group">
+      <label for="numeroFactura"># FACTURA:</label>
+      <input 
+        type="text" 
+        id="numeroFactura" 
+        name="numeroFactura" 
+        placeholder="Ej: 123456-789012345" 
+        required 
+        maxlength="20"
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+      <div class="error-message">No se permiten emojis</div>
+    </div>
+
+    <div class="form-group">
+      <label for="usuarioFactura">USUARIO QUE FACTURA:</label>
+      <input 
+        type="text" 
+        id="usuarioFactura" 
+        name="usuarioFactura" 
+        placeholder="Ej: NAE-1234" 
+        required 
+        maxlength="20"
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+      <div class="error-message">Formato inválido</div>
+    </div>
+
+    <div class="form-group">
+      <label for="cobroDelivery">COBRO DELIVERY:</label>
+      <input 
+        type="text" 
+        id="cobroDelivery" 
+        name="cobroDelivery" 
+        placeholder="Ej: STANDARD" 
+        required 
+        maxlength="100"
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+      <div class="error-message">No se permiten emojis</div>
+    </div>
+
+    <!-- Botones en la última fila -->
+    <div class="button-group">
+      <!-- Nuevo botón para guardar múltiples registros -->
+      <button type="button" onclick="guardarRegistro()" id="guardarRegistroButton">Guardar Registro</button>
+
+      <!-- Mantienes el botón de exportar que llama a validarFormulario() (single record o check general) -->
+      <button type="button" onclick="exportarRegistros()" id="exportButton" disabled>Exportar Datos</button>
+
+      <!-- Botón para limpiar el formulario -->
+      <button type="button" onclick="limpiarFormulario()" id="nuevoRegistroButton">Limpiar Registro</button>
+    </div>
+  </form>
+
+  <!-- Sección para mostrar la tabla con los registros guardados -->
+  <div id="tablaRegistrosContainer">
+    <h2>Registros Guardados</h2>
+    <table id="tablaRegistros">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Cédula/RUC</th>
+          <th>Cód. Dactilar</th>
+          <th>Contacto</th>
+          <th>Teléfono</th>
+          <th>Entrega</th>
+          <th>Provincia</th>
+          <th>Ciudad</th>
+          <th>Dirección</th>
+          <th>Usuario</th>
+          <th>Equipo</th>
+          <th>#Celular</th>
+          <th>IMEI</th>
+          <th>SIMCARD</th>
+          <th>#Orden</th>
+          <th>#Factura</th>
+          <th>Usuario</th>
+          <th>Delivery</th>
+          <th>Acción</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se llenarán dinámicamente las filas de registros -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Enlazamos el archivo JavaScript -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>
