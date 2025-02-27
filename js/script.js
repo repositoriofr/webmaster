@@ -117,7 +117,7 @@ function actualizarTabla() {
     // Agrega una celda extra para el botón "Eliminar"
     const celdaEliminar = document.createElement('td');
     const btnEliminar = document.createElement('button');
-    btnEliminar.textContent = <i class="far fa-trash-alt"></i>;
+    btnEliminar.textContent = "X";
     btnEliminar.style.fontSize = "10px";
     btnEliminar.addEventListener('click', () => {
       // Remover el registro del arreglo
