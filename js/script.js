@@ -20,30 +20,26 @@ let registros = [];
 // Validación en Tiempo Real
 // ===========================
 inputs.forEach(input => {
-    input.addEventListener('input', () => {
-        const errorMessage = input.parentElement.querySelector('.error-message');
-        if (!input.checkValidity()) {
-            errorMessage.style.display = 'block';
-        } else {
-            errorMessage.style.display = 'none';
-        }
-        // Aquí podrías habilitar o deshabilitar el botón de exportar en tiempo real, 
-        // pero en este caso lo habilitamos solo cuando se guarda al menos un registro.
-    });
+  input.addEventListener('input', () => {
+    const errorMessage = input.parentElement.querySelector('.error-message');
+    if (!input.checkValidity()) {
+      errorMessage.style.display = 'block';
+    } else {
+      errorMessage.style.display = 'none';
+    }
+    // Podrías habilitar o deshabilitar el botón de exportar en tiempo real,
+    // pero aquí se habilita al guardar al menos un registro.
+  });
 });
 
-// Funcion para exportar registros 
-
+// Función para exportar registros
 function exportarRegistros() {
-  // Si no hay registros guardados, se alerta al usuario
   if (registros.length === 0) {
     alert("No hay registros para exportar.");
     return;
   }
-  // Si hay registros, exporta
   exportarDatos();
 }
-
 
 // Guardar un nuevo registro (máximo 10)
 function guardarRegistro() {
@@ -66,141 +62,192 @@ function guardarRegistro() {
     return;
   }
 
+  // Recopilar los valores del formulario
+  const registro = [
+    document.getElementById('nombreCliente').value,
+    document.getElementById('cedulaRuc').value,
+    document.getElementById('codigoDactilar').value,
+    document.getElementById('nombreContacto').value,
+    document.getElementById('telefonoContacto').value,
+    document.getElementById('horaEntrega').value.toUpperCase(),
+    document.getElementById('provincia').value,
+    document.getElementById('ciudadEntrega').value,
+    document.getElementById('direccionEntrega').value,
+    document.getElementById('usuarioLinea').value,
+    document.getElementById('modeloEquipo').value,
+    document.getElementById('numeroCelular').value,
+    document.getElementById('terminalImei').value,
+    document.getElementById('simcardIcc').value,
+    document.getElementById('ordenVenta').value,
+    document.getElementById('numeroFactura').value,
+    document.getElementById('usuarioFactura').value,
+    document.getElementById('cobroDelivery').value
+  ];
 
-    // Recopilar los valores del formulario
-    const registro = [
-        document.getElementById('nombreCliente').value,
-        document.getElementById('cedulaRuc').value,
-        document.getElementById('codigoDactilar').value,
-        document.getElementById('nombreContacto').value,
-        document.getElementById('telefonoContacto').value,
-        document.getElementById('horaEntrega').value.toUpperCase(),
-        document.getElementById('provincia').value,
-        document.getElementById('ciudadEntrega').value,
-        document.getElementById('direccionEntrega').value,
-        document.getElementById('usuarioLinea').value,
-        document.getElementById('modeloEquipo').value,
-        document.getElementById('numeroCelular').value,
-        document.getElementById('terminalImei').value,
-        document.getElementById('simcardIcc').value,
-        document.getElementById('ordenVenta').value,
-        document.getElementById('numeroFactura').value,
-        document.getElementById('usuarioFactura').value,
-        document.getElementById('cobroDelivery').value
-    ];
+  // Se agrega el registro al arreglo global
+  registros.push(registro);
 
-    // Se agrega el registro al arreglo global
-    registros.push(registro);
+  // Habilitar el botón "Exportar Datos" si tenemos al menos un registro
+  exportButton.disabled = (registros.length === 0);
 
-    // Habilitar el botón "Exportar Datos" si tenemos al menos un registro
-    exportButton.disabled = (registros.length === 0);
-  
-    alert("Registro guardado correctamente.");
-  
-    // Actualizar la tabla para visualizar el nuevo registro
-    actualizarTabla();
-  
-    // Limpiar solo el formulario (no el arreglo de registros)
-    limpiarFormulario();
-  }
-  
-  // Actualizar la tabla en pantalla con los registros almacenados
-  function actualizarTabla() {
-    const tbody = document.querySelector('#tablaRegistros tbody');
-    tbody.innerHTML = ''; // Limpia la tabla antes de volver a llenarla
-  
-    registros.forEach((reg, index) => {
-      const fila = document.createElement('tr');
-  
-      // Se crean las celdas con cada uno de los datos del registro
-      reg.forEach(campo => {
-        const celda = document.createElement('td');
-        celda.textContent = campo;
-        fila.appendChild(celda);
-      });
-  
-      // Se agrega una celda extra para el botón "Eliminar"
-      const celdaEliminar = document.createElement('td');
-      const btnEliminar = document.createElement('button');
-      btnEliminar.textContent = "X";
-      btnEliminar.style.fontSize = "10px";
-      btnEliminar.addEventListener('click', () => {
-        // Remover el registro del arreglo
-        registros.splice(index, 1);
-        // Actualizar la tabla después de borrar
-        actualizarTabla();
-        // Si ya no hay registros, deshabilitar el botón de exportar
-        exportButton.disabled = registros.length === 0;
-      });
-      celdaEliminar.appendChild(btnEliminar);
-      fila.appendChild(celdaEliminar);
-  
-      tbody.appendChild(fila);
-    });
-  }
-  
-// Función para convertir un valor en formato similar a Excel (escapando caracteres especiales)
-function toExcelLikeText(value) {
-  if (typeof value !== 'string') value = String(value);
-  let escapedValue = value.replace(/"/g, '""');
-  const needsQuotes = /[\t\n\r"]/.test(escapedValue);
-  return needsQuotes ? `"${escapedValue}"` : escapedValue;
+  alert("Registro guardado correctamente.");
+
+  // Actualizar la tabla para visualizar el nuevo registro
+  actualizarTabla();
+
+  // Limpiar solo el formulario (no el arreglo de registros)
+  limpiarFormulario();
 }
 
-// Función para exportar todos los registros almacenados a un archivo de texto
+// Actualizar la tabla en pantalla con los registros almacenados
+function actualizarTabla() {
+  const tbody = document.querySelector('#tablaRegistros tbody');
+  tbody.innerHTML = ''; // Limpia la tabla antes de volver a llenarla
+
+  registros.forEach((reg, index) => {
+    const fila = document.createElement('tr');
+
+    // Se crean las celdas con cada uno de los datos del registro
+    reg.forEach(campo => {
+      const celda = document.createElement('td');
+      celda.textContent = campo;
+      fila.appendChild(celda);
+    });
+
+    // Agrega una celda extra para el botón "Eliminar"
+    const celdaEliminar = document.createElement('td');
+    const btnEliminar = document.createElement('button');
+    btnEliminar.textContent = <i class="far fa-trash-alt"></i>;
+    btnEliminar.style.fontSize = "10px";
+    btnEliminar.addEventListener('click', () => {
+      // Remover el registro del arreglo
+      registros.splice(index, 1);
+      // Actualizar la tabla después de borrar
+      actualizarTabla();
+      // Si ya no hay registros, deshabilitar el botón de exportar
+      exportButton.disabled = (registros.length === 0);
+    });
+    celdaEliminar.appendChild(btnEliminar);
+    fila.appendChild(celdaEliminar);
+
+    tbody.appendChild(fila);
+  });
+}
+
+// ===========================
+// Funciones para Exportar en Windows-1252
+// ===========================
+
+// 1. Mapa de caracteres (incompleto). Agrega los que necesites.
+const win1252Map = {
+  'Á': 0xC1, 'É': 0xC9, 'Í': 0xCD, 'Ó': 0xD3, 'Ú': 0xDA,
+  'á': 0xE1, 'é': 0xE9, 'í': 0xED, 'ó': 0xF3, 'ú': 0xFA,
+  'Ñ': 0xD1, 'ñ': 0xF1,
+  'Ü': 0xDC, 'ü': 0xFC,
+  '¿': 0xBF, '¡': 0xA1,
+  '“': 0x93, '”': 0x94, '‘': 0x91, '’': 0x92,
+  '…': 0x85, '—': 0x97, '–': 0x96,
+  // Agrega más si lo requieres
+};
+
+// 2. Función para convertir un texto en bytes Windows-1252 sin BOM
+function textToWindows1252(text) {
+  const bytes = [];
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    // ASCII < 128 => igual
+    if (code <= 127) {
+      bytes.push(code);
+    } else {
+      // Ver si está en la tabla
+      const char = text[i];
+      if (win1252Map[char] !== undefined) {
+        bytes.push(win1252Map[char]);
+      } else {
+        // Si no está en el mapeo, usar "?"
+        bytes.push(0x3F);
+      }
+    }
+  }
+  return bytes;
+}
+
+// 3. Función para escapar comillas y encerrar en comillas si hay tab, salto de línea, etc.
+function toExcelLikeText(value) {
+  if (typeof value !== 'string') value = String(value);
+  let escaped = value.replace(/"/g, '""');
+  const needsQuotes = /[\t\n\r"]/.test(escaped);
+  return needsQuotes ? `"${escaped}"` : escaped;
+}
+
+// 4. Exportar datos a un .txt en Windows-1252 (ANSI)
 function exportarDatos() {
-  if (registros.length === 0) {
+  if (!registros || registros.length === 0) {
     alert("No hay registros para exportar.");
     return;
   }
 
-  // Encabezados copiados fielmente de la plantilla manual
+  // Encabezados (copiados textualmente desde tu archivo 'correcto')
+  // Ojo: van con caracteres “raros” (tipo ‘TEL…FONO’, etc.)
+  // Si prefieres, ajusta a los que use tu plantilla real.
   const encabezados = [
     'NOMBRE DE CLIENTE / TITULAR (NOMBRES Y APELLIDOS COMPLETOS)',
-    '" CEDULA O RUC\n(INGRESAR SOLO NÚMEROS NO COMILLAS NI ESPACIOS)"',
-    '" CODIGO DACTILAR\n(INGRESAR SOLO NÚMEROS NO COMILLAS NI ESPACIOS)"',
+    '" CEDULA O RUC\n(INGRESAR SOLO N⁄MEROS NO COMILLAS NI ESPACIOS)"',
+    '" CODIGO DACTILAR\n(INGRESAR SOLO N⁄MEROS NO COMILLAS NI ESPACIOS)"',
     '"NOMBRE DE CONTACTO PARA CITA\n(NOMBRE DE LA PERSONA QUE VA A RECIBIR EL PEDIDO)"',
-    'TELÉFONO CONTACTO CITA',
+    'TEL…FONO CONTACTO CITA',
     'HORA DE ENTREGA',
     '"PROVINCIA\n(SELECCIONE)"',
     '"CIUDAD DE ENTREGA\n(SELECCIONE)"',
-    '"DIRECCIÓN DE ENTREGA DEL PEDIDO (CITA)\n(CANTÓN / SECTOR / BARRIO / CALLE PRINCIPAL / CALLE SECUNDARIA / NOMBRE EDIFICO / NO. CASA / VILLA / SOLAR / LOTE / DEPARTAMENTO / REFERENCIAS: FRENTE DE..JUNTO A..DIAGONAL…A ""X"" CUADRAS DE..)"',
-    'USUARIO DE LA LÍNEA',
-    '"MODELO EQUIPO\n(INGRESAR EL MODELO, ESTE CAMPO NO DEBE ESTAR VACÍO)"',
-    '"NUMERO CELULAR (MIN)\n(INGRESE SOLO NÚMEROS)"',
-    '"TERMINAL/IMEI \n(INGRESE SOLO LOS 15 DÍGITOS)"',
-    '"SIMCARD/ICC\n(INGRESE SOLO LOS 19 DÍGITOS)"',
+    '"DIRECCI”N DE ENTREGA DEL PEDIDO (CITA)\n(CANT”N / SECTOR / BARRIO / CALLE PRINCIPAL / CALLE SECUNDARIA / '
+      + 'NOMBRE EDIFICO / NO. CASA / VILLA / SOLAR / LOTE / DEPARTAMENTO / '
+      + 'REFERENCIAS: FRENTE DE..JUNTO A..DIAGONALÖA ""X"" CUADRAS DE..)"',
+    'USUARIO DE LA LÕNEA',
+    '"MODELO EQUIPO\n(INGRESAR EL MODELO, ESTE CAMPO NO DEBE ESTAR VACÕO)"',
+    '"NUMERO CELULAR (MIN)\n(INGRESE SOLO N⁄MEROS)"',
+    '"TERMINAL/IMEI \n(INGRESE SOLO LOS 15 DÕGITOS)"',
+    '"SIMCARD/ICC\n(INGRESE SOLO LOS 19 DÕGITOS)"',
     '"# ORDEN DE VENTA\n"',
     '" # FACTURA                            (FORMATO                                        000000-000000000)\n"',
-    '"USUARIO QUE FACTURA\n(CÓDIGO NAE...)"',
+    '"USUARIO QUE FACTURA\n(C”DIGO NAE...)"',
     'COBRO DELIVERY'
   ];
 
-  // Construir el contenido: Encabezados + cada registro en su propia línea
-  let contenido = encabezados.join('\t') + '\n';
+  // 4A. Construir el string final
+  //     1) Encabezados (unidos con tab + CRLF)
+  let contenido = encabezados.join('\t') + '\r\n';
+
+  //     2) Cada registro: escaparlo con toExcelLikeText y unir con tab
   registros.forEach(registro => {
-    contenido += registro.map(v => toExcelLikeText(v)).join('\t') + '\n';
+    const fila = registro.map(toExcelLikeText).join('\t');
+    contenido += fila + '\r\n';
   });
 
-  // Crear archivo con codificación UTF-8 sin BOM (quitamos "\uFEFF")
-  const blob = new Blob([contenido], { 
-    type: 'text/plain;charset=utf-8' 
+  // 4B. Convertir el string completo a bytes Windows-1252
+  const cp1252Array = textToWindows1252(contenido);
+
+  // 4C. Crear un Blob con esos bytes (sin BOM).
+  const blob = new Blob([new Uint8Array(cp1252Array)], {
+    type: 'text/plain;charset=windows-1252'
   });
 
-  // Forzar la descarga
+  // 4D. Disparar la descarga
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'PlantillaCargaPedidosMasivo.txt';
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
 }
 
 // Función para limpiar y reiniciar el formulario
 function limpiarFormulario() {
-    ordenForm.reset();
-    document.querySelectorAll('.error-message').forEach(msg => {
-        msg.style.display = 'none';
-    });
+  ordenForm.reset();
+  document.querySelectorAll('.error-message').forEach(msg => {
+    msg.style.display = 'none';
+  });
 }
+
 
 // Objeto que asocia cada provincia a sus ciudades
 const provincias = {

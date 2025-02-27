@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="images/ico.png">
   <!-- Enlazamos el archivo CSS -->
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -89,7 +90,6 @@
         <option value="" disabled selected>Seleccione una opción</option>
         <option value="mañana">MAÑANA</option>
         <option value="tarde">TARDE</option>
-        <option value="noche">NOCHE</option>
       </select>
       <div class="error-message">Seleccione un horario válido: MAÑANA / TARDE / NOCHE</div>
     </div>
@@ -266,13 +266,13 @@
     <!-- Botones en la última fila -->
     <div class="button-group">
       <!-- Nuevo botón para guardar múltiples registros -->
-      <button type="button" onclick="guardarRegistro()" id="guardarRegistroButton">Guardar Registro</button>
+      <button type="button" onclick="guardarRegistro()" id="guardarRegistroButton">Guardar Registro <i class="fa-regular fa-floppy-disk"></i></button>
 
       <!-- Mantienes el botón de exportar que llama a validarFormulario() (single record o check general) -->
-      <button type="button" onclick="exportarRegistros()" id="exportButton" disabled>Exportar Datos</button>
+      <button type="button" onclick="exportarRegistros()" id="exportButton" disabled>Exportar Datos <i class="fa-solid fa-download"></i></button>
 
       <!-- Botón para limpiar el formulario -->
-      <button type="button" onclick="limpiarFormulario()" id="nuevoRegistroButton">Limpiar Registro</button>
+      <button type="button" onclick="limpiarFormulario()" id="nuevoRegistroButton">Limpiar Registro <i class="fa-regular fa-trash-can"></i></button>
     </div>
   </form>
 
