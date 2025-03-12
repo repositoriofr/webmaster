@@ -242,13 +242,11 @@ function exportarDatos() {
 
 // Función para limpiar solo los campos necesarios y reiniciar el formulario
 function limpiarFormulario() {
-  // Seleccionamos todos los inputs, selects y textareas del formulario
   const inputs = ordenForm.querySelectorAll('input, select, textarea');
   
   inputs.forEach(input => {
-    // Si el campo NO tiene el atributo data-keep, lo limpiamos
-    if (!input.hasAttribute('data-keep')) {
-      // Si es checkbox o radio, desmarcamos, sino, vaciamos el valor
+    // Solo preserva el valor si data-keep está definido en "true"
+    if (input.getAttribute('data-keep') !== 'true') {
       if (input.type === 'checkbox' || input.type === 'radio') {
         input.checked = false;
       } else {
@@ -256,7 +254,6 @@ function limpiarFormulario() {
       }
     }
     
-    // Ocultamos cualquier mensaje de error asociado
     const errorMessage = input.parentElement.querySelector('.error-message');
     if (errorMessage) {
       errorMessage.style.display = 'none';
