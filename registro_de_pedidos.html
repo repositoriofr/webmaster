@@ -26,7 +26,8 @@
         placeholder="Ej: Juan Pérez González" 
         required 
         maxlength="100"
-        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$"
+        data-keep="true">
       <div class="error-message">No se permiten emojis</div>
     </div>      
 
@@ -39,7 +40,8 @@
         placeholder="10 dígitos (cédula) o 13 (RUC)" 
         required 
         pattern="\d{10}|\d{13}"
-        maxlength="13">
+        maxlength="13"
+        data-keep="true">
       <div class="error-message">Debe contener 10 o 13 dígitos numéricos</div>
     </div>
 
@@ -53,6 +55,7 @@
         required 
         pattern="\d{8,15}"
         maxlength="15"
+        data-keep="true"
         readonly>
       <div class="error-message">Entre 8 y 13 dígitos numéricos</div>
     </div>
@@ -66,7 +69,8 @@
         placeholder="Ej: María López"
         required 
         maxlength="100"
-        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$"
+        data-keep="true">
       <div class="error-message">Solo letras y espacios permitidos</div>
 
     </div>
@@ -80,13 +84,14 @@
         placeholder="Ej: 0999123456" 
         required 
         pattern="\d{7,10}"
-        maxlength="10">
+        maxlength="10"
+        data-keep="true">
       <div class="error-message">7-10 dígitos numéricos</div>
     </div>
 
     <div class="form-group">
       <label for="horaEntrega">HORA DE ENTREGA:</label>
-      <select id="horaEntrega" name="horaEntrega" required>
+      <select id="horaEntrega" name="horaEntrega" required data-keep="true">
         <option value="" disabled selected>Seleccione una opción</option>
         <option value="mañana">MAÑANA</option>
         <option value="tarde">TARDE</option>
@@ -97,7 +102,7 @@
     <!-- Desplegable de Provincias -->
     <div class="form-group">
       <label for="provincia">PROVINCIA:</label>
-      <select id="provincia" name="provincia" required>
+      <select id="provincia" name="provincia" required data-keep="true">
         <option value="">Seleccione provincia</option>
         <option value="AZUAY">AZUAY</option>
         <option value="BOLIVAR">BOLIVAR</option>
@@ -130,7 +135,7 @@
     <!-- Desplegable de Ciudades/Cantones -->
     <div class="form-group">
       <label for="ciudadEntrega">CIUDAD DE ENTREGA:</label>
-      <select id="ciudadEntrega" name="ciudadEntrega" required>
+      <select id="ciudadEntrega" name="ciudadEntrega" required data-keep="true">
         <option value="">Seleccione ciudad</option>
       </select>
       <div class="error-message">Seleccione una ciudad</div>
@@ -144,6 +149,7 @@
         placeholder="Ej: Av. Principal 123 y Calle Secundaria, Edificio Azul, Depto 4B"
         required 
         maxlength="500"
+        data-keep="true"
       ></textarea>
       <div class="error-message">Dirección requerida (máx. 500 caracteres)</div>
     </div>
@@ -157,7 +163,8 @@
         placeholder="Ej: IMPORTACIONES MIRANDA S.A." 
         required 
         maxlength="100"
-        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$"
+        data-keep="true">
       <div class="error-message">No se permiten emojis</div>
     </div>
 
@@ -170,7 +177,7 @@
         placeholder="Ej: iPhone 15 Pro Max" 
         required 
         maxlength="50"
-        data-keep="true">
+        data-keep="false">
       <div class="error-message">Modelo requerido</div>
     </div>
 
@@ -184,7 +191,7 @@
         required 
         pattern="\d{10}"
         maxlength="10"
-        data-keep="true">
+        data-keep="false">
       <div class="error-message">Solo números</div>
     </div>
 
@@ -197,7 +204,7 @@
         placeholder="15 dígitos"
         pattern="\d{15}"
         maxlength="15"
-        data-keep="true">
+        data-keep="false">
       <div class="error-message">15 dígitos exactos</div>
     </div>
 
@@ -210,7 +217,7 @@
         placeholder="19 dígitos" 
         pattern="\d{19}"
         maxlength="19"
-        data-keep="true">
+        data-keep="false">
       <div class="error-message">19 dígitos exactos</div>
     </div>
 
@@ -223,7 +230,8 @@
         placeholder="Ej: ORD123456" 
         required 
         maxlength="20"
-        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$"
+        data-keep="true">
       <div class="error-message">No se permiten emojis</div>
     </div>
 
@@ -236,7 +244,8 @@
         placeholder="Ej: 123456-789012345" 
         required 
         maxlength="20"
-        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$"
+        data-keep="true">
       <div class="error-message">No se permiten emojis</div>
     </div>
 
@@ -249,7 +258,8 @@
         placeholder="Ej: NAE1234" 
         required 
         maxlength="20"
-        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$"
+        data-keep="true">
       <div class="error-message">Formato inválido</div>
     </div>
 
@@ -263,7 +273,8 @@
         value="STANDARD"
         required 
         maxlength="100"
-        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$">
+        pattern="^(?!.*[\uD83C-\uDBFF][\uDC00-\uDFFF]).+$"
+        data-keep="true">
       <div class="error-message">No se permiten emojis</div>
     </div>
 
